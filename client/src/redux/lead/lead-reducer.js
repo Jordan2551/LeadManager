@@ -1,15 +1,17 @@
 import LeadTypes from './lead-types';
 
 const INITIAL_STATE = {
-  message: 'start',
+  name: '',
+  email: '',
+  message: '',
 };
 
 const LeadReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case LeadTypes.ADD_LEAD:
-    case 'GET_MESSAGE':
       return {
         ...state,
+        ...action.payload,
       };
     case LeadTypes.REMOVE_LEAD:
       return {
