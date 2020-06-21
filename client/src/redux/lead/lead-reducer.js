@@ -1,25 +1,25 @@
 import LeadTypes from './lead-types';
 
 const INITIAL_STATE = {
-  name: '',
-  email: '',
-  message: '',
+  leads: [],
 };
 
 const LeadReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case LeadTypes.GET_LEADS:
+      return {
+        ...state,
+        leads: action.payload,
+      };
+    case LeadTypes.DELETE_LEAD:
+      return {
+        ...state,
+        leads: state.leads.filter((lead) => lead.id !== action.payload),
+      };
     case LeadTypes.ADD_LEAD:
       return {
         ...state,
-        ...action.payload,
-      };
-    case LeadTypes.REMOVE_LEAD:
-      return {
-        ...state,
-      };
-    case LeadTypes.EDIT_LEAD:
-      return {
-        ...state,
+        leads: [...state.leads, action.payload],
       };
     default:
       return state;
