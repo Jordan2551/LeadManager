@@ -4,12 +4,14 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addLead } from '../../redux/lead/lead-actions';
 
+const INITIAL_STATE = {
+  name: '',
+  email: '',
+  message: '',
+};
+
 export class Form extends Component {
-  state = {
-    name: '',
-    email: '',
-    message: '',
-  };
+  state = INITIAL_STATE;
 
   static propTypes = {
     addLead: PropTypes.func.isRequired,
@@ -26,6 +28,9 @@ export class Form extends Component {
     const { name, email, message } = this.state;
     const lead = { name, email, message };
     this.props.addLead(lead);
+    this.setState(INITIAL_STATE);
+
+    // if(this.props.error)
   };
 
   render() {
@@ -35,7 +40,7 @@ export class Form extends Component {
         <h1>Add Lead Form</h1>
         <form onSubmit={this.onSubmit.bind(this)}>
           <div className='form-group'>
-            <label for='exampleInputPassword1'>Name</label>
+            <label htmlFor='exampleInputPassword1'>Name</label>
             <input
               type='text'
               className='form-control'
@@ -46,7 +51,7 @@ export class Form extends Component {
             />
           </div>
           <div className='form-group'>
-            <label for='email'>Email address</label>
+            <label htmlFor='email'>Email address</label>
             <input
               type='email'
               className='form-control'
@@ -61,7 +66,7 @@ export class Form extends Component {
             </small>
           </div>
           <div className='form-group'>
-            <label for='exampleInputPassword1'>Message</label>
+            <label htmlFor='exampleInputPassword1'>Message</label>
             <textarea
               className='form-control'
               name='message'
@@ -79,8 +84,10 @@ export class Form extends Component {
   }
 }
 
+const mapStateToProps = (state) => ({ error: state.errors });
+
 const mapDispatchToProps = (dispatch) => ({
   addLead: (lead) => addLead(dispatch, lead),
 });
 
-export default connect(null, mapDispatchToProps)(Form);
+export default connect(mapStateToProps, mapDispatchToProps)(Form);
