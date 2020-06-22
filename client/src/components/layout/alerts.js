@@ -30,8 +30,8 @@ export class Alerts extends Component {
 
   componentDidUpdate(prevProps) {
     const { error, message } = this.props;
-    if (message) this.displayMessages(message);
-    if (error.message) this.displayErrors(error);
+    if (error) if (error.message) this.displayErrors(error);
+    if (message) if (message) this.displayMessages(message);
   }
 
   render() {
